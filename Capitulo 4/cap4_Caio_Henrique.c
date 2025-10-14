@@ -7,9 +7,6 @@ Caio Fernandes lott Primola     20193001742
 
 Este arquivo corresponde aos TPs 07, 08 e 09
 
-Comando terminal:
-    gcc cap4_Caio_Henrique.c -o pi_calc ; ./pi_calc <p1> <p2>
-
 */
 
 #include <time.h>
