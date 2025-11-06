@@ -10,15 +10,20 @@
 #include <fcntl.h>
 
 #define SHM_NAME        "sum"
-#define NUM_PROCESSES      3
+#define NUM_PROCESSES      100
 #define NUM_OPERATIONS  100000
 
-sem_t sem;
+// Both the sum variable and the semaphore should be on shared memory
+typedef struct {
+    double sum;
+    sem_t sem;
+} shared_data;
 
-double * createSharedMemory(int num_proc){
+
+shared_data * createSharedMemory(int num_proc){
     // Configuration parameters
     int shm_fd;
-    size_t shm_size = sizeof(double); // Tamanho exato para N resultados
+    size_t shm_size = sizeof(shared_data); // Tamanho exato para N resultados
     // Create the shared memory object
     shm_fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666);
     if (shm_fd == -1) {
@@ -32,7 +37,7 @@ double * createSharedMemory(int num_proc){
         exit(1); 
     }
     // Pointer to the mapping
-    double *sm_pointer;
+    shared_data *sm_pointer;
     sm_pointer = mmap(0, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (sm_pointer == MAP_FAILED) {
         perror("mmap failed");
@@ -64,32 +69,32 @@ void createProcesses(int * f_val, int * proc_idx){
     }
 }
 
-void childWork(double * sum, int * proc_idx){
+void childWork(shared_data * sd, int * proc_idx){
     for(int i=0; i < NUM_OPERATIONS; i++){
-        sem_wait(&sem); // down
-        *sum = *sum + 1;
-        sem_post(&sem); // up
+        sem_wait(&sd->sem); // down
+        sd->sum = sd->sum + 1;
+        sem_post(&sd->sem); // up
     }
     // printf("%i done! last value: %.0f\n", *proc_idx, *sum);
-    printf("%i done", *proc_idx);
+    printf("%i done\n", *proc_idx);
     exit(0);
 }
 
-void parentWork(double * sum){
+void parentWork(shared_data * sd){
     for(int i=0; i < NUM_PROCESSES; i++){
         wait(0);
     }
-    printf("Expected %i, got %.0f\n", NUM_PROCESSES * NUM_OPERATIONS, *sum);
+    printf("Expected %i, got %.0f\n", NUM_PROCESSES * NUM_OPERATIONS, sd->sum);
 }
 
 int main() {
 
     // Create shared memory
-    double *sum = createSharedMemory(NUM_PROCESSES);
-    *sum = 0;
+    shared_data *sd = createSharedMemory(NUM_PROCESSES);
+    sd->sum = 0;
 
     // Initialize semaphore
-    if(sem_init(&sem, 1, 1) != 0){
+    if(sem_init(&(sd->sem), 1, 1) != 0){
         perror("Semaphore initialization failed");
         exit(1);
     }
@@ -101,12 +106,12 @@ int main() {
     
     // Child work
     if(f_val==0){
-        childWork(sum, &proc_idx);
+        childWork(sd, &proc_idx);
     }
     
     // Parent work
     if(f_val>0){
-        parentWork(sum);
+        parentWork(sd);
     }
     return 0;
 }
