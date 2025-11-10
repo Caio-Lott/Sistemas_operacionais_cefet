@@ -29,8 +29,8 @@ char *space[] = {"", "\t", "\t\t", "\t\t\t", "\t\t\t\t" } ;
 // espera um tempo aleatório
 void espera (int n)
 {
-  sleep (random() % n) ;      // [cite: 6]
-  usleep (random() % 1000000) ; // [cite: 7]
+  // sleep (random() % n) ;      // [cite: 6]
+  // usleep (random() % 1000000) ; // [cite: 7]
 }
 
 // filósofo comendo

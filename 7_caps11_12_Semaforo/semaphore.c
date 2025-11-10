@@ -10,7 +10,7 @@
 #include <fcntl.h>
 
 #define SHM_NAME        "sum"
-#define NUM_PROCESSES      100
+#define NUM_PROCESSES   100
 #define NUM_OPERATIONS  100000
 
 // Both the sum variable and the semaphore should be on shared memory
@@ -20,7 +20,7 @@ typedef struct {
 } shared_data;
 
 
-shared_data * createSharedMemory(int num_proc){
+shared_data * createSharedMemory(){
     // Configuration parameters
     int shm_fd;
     size_t shm_size = sizeof(shared_data); // Tamanho exato para N resultados
@@ -90,7 +90,7 @@ void parentWork(shared_data * sd){
 int main() {
 
     // Create shared memory
-    shared_data *sd = createSharedMemory(NUM_PROCESSES);
+    shared_data *sd = createSharedMemory();
     sd->sum = 0;
 
     // Initialize semaphore
@@ -113,5 +113,6 @@ int main() {
     if(f_val>0){
         parentWork(sd);
     }
+    
     return 0;
 }
