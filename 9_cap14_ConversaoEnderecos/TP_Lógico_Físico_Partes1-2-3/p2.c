@@ -5,6 +5,8 @@ TP Capítulo 9 - Laboratório de Sistemas Operacionais - CEFET-MG 2025.2
 Henrique Rodrigues Lima         20193009473
 Caio Fernandes lott Primola     20193001742
 
+alternative: rodar o mesmo código duas vezes (mesmo endereço físico).
+
 */
 
 #include <time.h>
@@ -81,6 +83,7 @@ int main() {
     
     // Parent (terminal waits for this one)
     if(f_val>0){
+        int a; // Comparar
         char text [102] = "Sample text";
         for(int i=0;i<10;i++){
             strcat(text,"ahhhhhhh\n");
