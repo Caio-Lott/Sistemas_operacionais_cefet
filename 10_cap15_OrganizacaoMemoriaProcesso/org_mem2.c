@@ -15,14 +15,14 @@
 #define SIZE 100000
 
 // Definições de Cores ANSI para Terminal
-#define RESET     "\x1b[0m"
-#define BRANCO    "\x1b[37m"
-#define NEGRITO   "\x1b[1m"
-#define STACK_COR "\x1b[44m"    // Azul (STACK)
-#define HEAP_COR  "\x1b[45m"    // Roxo (HEAP)
-#define BSS_COR   "\x1b[42m"    // Verde (BSS)
-#define DATA_COR  "\x1b[43m"    // Amarelo/Marrom (DATA)
-#define TEXT_COR  "\x1b[46m"    // Ciano (TEXT)
+#define RESET       "\x1b[0m"
+#define BRANCO      "\x1b[37m"
+#define NEGRITO     "\x1b[1m"
+#define VERMELHO    "\x1b[41m"    // Azul (STACK)
+#define ROXO        "\x1b[45m"    // Roxo (HEAP)
+#define VERDE       "\x1b[42m"    // Verde (BSS)
+#define AMARELO     "\x1b[43m"    // Amarelo/Marrom (DATA)
+#define CIANO       "\x1b[46m"    // Ciano (TEXT)
 #define SEP       "|-------------------|-----------------------|---------------------------------------------------|\n"
 
 void imprime_mapa_colorido() {
@@ -32,32 +32,32 @@ void imprime_mapa_colorido() {
         "SEÇÃO", "ENDEREÇO INICIAL (EX.)", "CONTEUDO");
     printf(SEP);
     
-    // STACK (Azul) - Endereço Alto
-    printf(STACK_COR BRANCO "| %-17s " RESET, "STACK (Pilha)");
+    // STACK - Endereço Alto
+    printf(AMARELO BRANCO "| %-17s " RESET, "STACK (Pilha)");
     printf("| %-21s |", "0x7FFE... (Alto)");
     printf(" %-49s |" RESET "\n", "param, var_local, var_local_big");
     printf(SEP);
 
-    // HEAP (Roxo)
-    printf(HEAP_COR BRANCO "| %-17s " RESET, "HEAP (Malloc)");
+    // HEAP
+    printf(VERDE BRANCO "| %-17s " RESET, "HEAP (Malloc)");
     printf("| %-21s |", "0x14A1... ou 0x05... "); // Ajustado para refletir 0x050e680 do seu output
     printf(" %-49s |" RESET "\n", "*var_din (malloc)");
     printf(SEP);
 
-    // BSS (Verde)
-    printf(BSS_COR BRANCO "| %-17s " RESET, "BSS (Nao Init)");
+    // BSS
+    printf(ROXO BRANCO "| %-17s " RESET, "BSS (Nao Init)");
     printf("| %-21s |", "0x004C... ou 0x05...");
     printf(" %-49s |" RESET "\n", "var_global, var_global_big, var_local_st, var_din");
     printf(SEP);
 
-    // DATA (Amarelo/Marrom)
-    printf(DATA_COR BRANCO "| %-17s " RESET, "DATA (Inic.)");
+    // DATA
+    printf(CIANO BRANCO "| %-17s " RESET, "DATA (Inic.)");
     printf("| %-21s |", "0x004A...");
     printf(" %-49s |" RESET "\n", "var_global_init, string (ponteiro)");
     printf(SEP);
     
-    // TEXT (Ciano) - Endereço Baixo
-    printf(TEXT_COR BRANCO "| %-17s " RESET, "TEXT (Codigo/RO)");
+    // TEXT - Endereço Baixo
+    printf(VERMELHO BRANCO "| %-17s " RESET, "TEXT (Codigo/RO)");
     printf("| %-21s |", "0x0040... (Baixo)");
     printf(" %-49s |" RESET "\n", "main(), func(), const_global, *string (conteudo)");
     printf(SEP);
