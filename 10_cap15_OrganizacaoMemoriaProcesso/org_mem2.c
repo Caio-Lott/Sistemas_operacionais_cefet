@@ -22,7 +22,6 @@
 #define CIANO       "\x1b[46m"    // DATA
 #define SEP       "|-------------------|-----------------------|--------------------------------------------------------------|\n"
 
-// Função ajustada para aceitar e imprimir endereços reais (void *)
 void imprime_mapa_colorido(
     void *stack_addr, 
     void *heap_addr, 
@@ -37,25 +36,25 @@ void imprime_mapa_colorido(
         "SECAO", "ENDERECO DE REF.", "CONTEUDO");
     printf(SEP);
     
-    // STACK - usa o endereço de 'var_local'
+    // STACK - usa o endereço de 'var_local' - variáveis locais
     printf(AMARELO BRANCO "| %-17s " RESET, "STACK (Pilha)");
     printf("| %-21p |", stack_addr); // Imprime o endereço real
     printf(" %-60s |" RESET "\n", "param, var_local, var_local_big (Alto)");
     printf(SEP);
 
-    // HEAP - usa o endereço de '*var_din'
+    // HEAP - usa o endereço de '*var_din' - Memória alocada dinamicamente
     printf(VERDE BRANCO "| %-17s " RESET, "HEAP (Malloc)");
     printf("| %-21p |", heap_addr); // Imprime o endereço real
     printf(" %-60s |" RESET "\n", "*var_din (malloc)");
     printf(SEP);
 
-    // BSS - usa o endereço de 'var_global'
+    // BSS - usa o endereço de 'var_global' - variáveis globais (ou locais estáticas) não inicializadas
     printf(ROXO BRANCO "| %-17s " RESET, "BSS (Nao Init)");
     printf("| %-21p |", bss_addr); // Imprime o endereço real
     printf(" %-60s |" RESET "\n", "var_global, var_global_big, var_local_st, var_din (ponteiro)");
     printf(SEP);
 
-    // DATA - usa o endereço de 'var_global_init'
+    // DATA - usa o endereço de 'var_global_init' - variáveis globais (ou locais estáticas) inicializadas
     printf(CIANO BRANCO "| %-17s " RESET, "DATA (Inic.)");
     printf("| %-21p |", data_addr); // Imprime o endereço real
     printf(" %-60s |" RESET "\n", "var_global_init, string (ponteiro)");
