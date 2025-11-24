@@ -1,4 +1,4 @@
-// clear ; gcc -Wall -static org_mem2.c -o om2 && ./om2
+// clear ; cd /home/limao/Documents/2025.2/LSO/repo/Sistemas_operacionais_cefet/10_cap15_OrganizacaoMemoriaProcesso; gcc -Wall -static org_mem2.c -o om2 && ./om2
 
 // TP 10 de Laboratório de Sistemas Operacionais - CEFET-MG 2025.2
 // Henrique Rodrigues Lima      - 20193009473

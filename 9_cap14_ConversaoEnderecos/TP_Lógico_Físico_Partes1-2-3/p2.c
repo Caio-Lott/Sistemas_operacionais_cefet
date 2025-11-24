@@ -5,7 +5,9 @@ TP Capítulo 9 - Laboratório de Sistemas Operacionais - CEFET-MG 2025.2
 Henrique Rodrigues Lima         20193009473
 Caio Fernandes lott Primola     20193001742
 
-alternative: rodar o mesmo código duas vezes (mesmo endereço físico).
+clear ; cd /home/limao/Documents/2025.2/LSO/repo/Sistemas_operacionais_cefet/9_cap14_ConversaoEnderecos/TP_Lógico_Físico_Partes1-2-3 && gcc p2.c -o 2 && ./2
+
+alternativa: rodar o mesmo código duas vezes (mesmo endereço físico).
 
 */
 

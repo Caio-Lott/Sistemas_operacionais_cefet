@@ -8,6 +8,12 @@
 #include <sys/mman.h>
 #include <inttypes.h>
 
+int f1(){
+    int x;
+    for(x=1;x<10;x++);
+    return x;
+}
+
 void vtop(uintptr_t vaddr) {
 
     FILE *pagemap;
@@ -30,12 +36,6 @@ void vtop(uintptr_t vaddr) {
 		printf("\tPhys:\t%" PRIxPTR " \n", paddr);
 }
 
-int f1(){
-    int x;
-    for(x=1;x<10;x++);
-    return x;
-}
-
 int main() {
     
     int a = 0;
@@ -48,21 +48,22 @@ int main() {
     
     // Child
     if(f_val==0){
-        printf("Filho\n");
+        printf("\nFilho\n\t");
         printf("\'a\':\t");
         vtop((uintptr_t) &a);
-        printf("\'f1\':\t");
-        vtop((uintptr_t) &f1);
+        printf("\t\'f1\':\t");
+        vtop((uintptr_t) f1);
     }
     
     //Parent
     if(f_val>0){
         sleep(1);
-        printf("Pai\n");
+        printf("Pai\n\t");
         printf("\'a\':\t");
         vtop((uintptr_t) &a);
-        printf("\'f1\':\t");
-        vtop((uintptr_t) &f1);
+        printf("\t\'f1\':\t");
+        vtop((uintptr_t) f1);
     }
+
     return 0;
 }
