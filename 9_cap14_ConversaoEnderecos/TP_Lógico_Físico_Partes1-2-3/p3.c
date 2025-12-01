@@ -52,6 +52,7 @@ int main() {
     printf("Vetor de %d inteiros:\t\t%d bytes\n", 
            VETOR_SIZE, VETOR_SIZE * (int) sizeof(int));
     printf("Tamanho da Pagina (Frame):\t%ld bytes\n\n", page_size);
+
     
     // Allocate the vector on the HEAP
     int *vetor = (int *) malloc(VETOR_SIZE * sizeof(int));
